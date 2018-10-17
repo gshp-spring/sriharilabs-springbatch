@@ -40,9 +40,7 @@ public class ConfiguracionBatch {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
-    @Autowired
-    public DataSource dataSource;
-
+   
     @Bean
     public FlatFileItemReader<Persona> reader() {
         FlatFileItemReader<Persona> lector = new FlatFileItemReader<>();
@@ -70,17 +68,14 @@ public class ConfiguracionBatch {
     }
 
     @Bean
-    public JdbcBatchItemWriter<Persona> writer() {
-        JdbcBatchItemWriter<Persona> writer = new JdbcBatchItemWriter<>();
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-        writer.setSql("INSERT INTO personas (nombre, apellido) VALUES (:nombre, :apellido)");
-        writer.setDataSource(dataSource);
-        return writer;
+    public CustomWriter writer() {
+        
+        return new CustomWriter();
     }
 
     @Bean
     public JobExecutionListener listener() {
-        return new JobCompletionNotificationListener(new JdbcTemplate(dataSource));
+        return new JobCompletionNotificationListener();
     }
 
     @Bean

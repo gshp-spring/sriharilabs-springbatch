@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author usuario
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages= {"com.gshp, com.gshp.cosmo"})
 public class MyMain {
 
     /**
